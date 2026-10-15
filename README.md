@@ -1,7 +1,7 @@
 # PostgreSQL Docs MCP
 
-Public open-source [Model Context Protocol](https://modelcontextprotocol.io/) server for the official PostgreSQL documentation:
+Public open-source [Model Context Protocol](https://modelcontextprotocol.io/) server for the official, versioned [PostgreSQL documentation](https://www.postgresql.org/docs/).
 
-https://www.postgresql.org/docs/19/index.html
+The server is intended to default to the current stable PostgreSQL release while supporting explicit documentation versions, including development and beta releases when available.
 
 This is a community project. It is not affiliated with the PostgreSQL Global Development Group.
