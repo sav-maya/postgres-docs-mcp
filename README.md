@@ -114,6 +114,17 @@ stderr so they cannot corrupt MCP JSON-RPC messages.
 uv run pytest
 ```
 
+## Related project
+
+This MCP server provides authoritative, version-specific PostgreSQL reference
+material. For curated practitioner guidance on schema design, indexing, query
+optimization, and common pitfalls, see
+[Postgres Skills](https://github.com/neondatabase/postgres-skills).
+
+```bash
+npx skills add neondatabase/postgres-skills
+```
+
 ## License
 
 [MIT](LICENSE)
