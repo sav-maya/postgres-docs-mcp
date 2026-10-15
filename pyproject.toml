@@ -1,0 +1,26 @@
+[project]
+name = "postgres-docs-mcp"
+version = "0.1.0"
+description = "MCP server for official, versioned PostgreSQL documentation"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+dependencies = [
+    "beautifulsoup4>=4.12",
+    "httpx2>=2.10",
+    "markdownify>=1.2",
+    "mcp>=2.3,<3",
+]
+
+[project.scripts]
+postgres-docs-mcp = "postgres_docs_mcp.server:main"
+
+[dependency-groups]
+dev = ["pytest>=8.3"]
+
+[build-system]
+requires = ["uv_build>=0.11.0,<0.12.0"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
