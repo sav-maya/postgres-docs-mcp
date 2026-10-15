@@ -14,9 +14,10 @@ version—including archived, beta, and development documentation.
 - `get_doc_page` — read a documentation page as Markdown, with pagination for
   long pages
 
-## Add to Cursor
+## Use it in Cursor
 
-Add this server to `~/.cursor/mcp.json`:
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) if needed,
+then add this server to `~/.cursor/mcp.json`:
 
 ```json
 {
@@ -33,12 +34,24 @@ Add this server to `~/.cursor/mcp.json`:
 }
 ```
 
-Restart Cursor after saving the configuration. The first launch downloads the
-server and its dependencies.
+Restart Cursor after saving the file. The first launch downloads the server and
+its dependencies. In **Cursor Settings → Tools & MCP**, `postgres-docs` should
+appear as enabled with three tools.
+
+Then ask Cursor questions normally. It calls the tools when documentation is
+needed. For example:
+
+- `Which PostgreSQL documentation versions are available?`
+- `Using the PostgreSQL 18 docs, explain logical replication conflicts.`
+- `Look up CREATE PUBLICATION in PostgreSQL 15 and cite the source page.`
+- `What changed in the JSON functions between PostgreSQL 16 and 18?`
+
+The version defaults to `current`. Mention a version in your prompt when you
+need behavior from a specific release.
 
 ## Run locally
 
-Requires Python 3.10+ and [uv](https://docs.astral.sh/uv/).
+Requires Python 3.10+ and uv.
 
 ```bash
 git clone https://github.com/sav-maya/postgres-docs-mcp.git
@@ -47,8 +60,29 @@ uv sync
 uv run postgres-docs-mcp
 ```
 
-The server uses stdio. Logs go to stderr so they do not interfere with MCP
-messages.
+To make Cursor launch the local clone, use an absolute path:
+
+```json
+{
+  "mcpServers": {
+    "postgres-docs": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/ABSOLUTE/PATH/TO/postgres-docs-mcp",
+        "run",
+        "postgres-docs-mcp"
+      ]
+    }
+  }
+}
+```
+
+The server follows the official
+[Build an MCP server](https://modelcontextprotocol.io/docs/2026-07-28/develop/build-server)
+guide: Python 3.10+, MCP Python SDK 2.x, typed `@mcp.tool()` functions,
+`httpx2`, and stdio transport. It never writes logs to stdout; logs go to
+stderr so they cannot corrupt MCP JSON-RPC messages.
 
 ## Development
 

@@ -48,12 +48,16 @@ def _page(value: str) -> str:
 
 async def _get(url: str, **kwargs: object) -> httpx2.Response:
     headers = {"User-Agent": USER_AGENT, "Accept": "text/html"}
-    async with httpx2.AsyncClient(
-        follow_redirects=True, headers=headers, timeout=30.0
-    ) as client:
-        response = await client.get(url, **kwargs)
-        response.raise_for_status()
-        return response
+    try:
+        async with httpx2.AsyncClient(
+            follow_redirects=True, headers=headers, timeout=30.0
+        ) as client:
+            response = await client.get(url, **kwargs)
+            response.raise_for_status()
+            return response
+    except Exception as exc:
+        logger.exception("PostgreSQL documentation request failed: %s", url)
+        raise RuntimeError("Unable to fetch the PostgreSQL documentation.") from exc
 
 
 def _version_rows(html: str, status: str) -> list[dict[str, str]]:

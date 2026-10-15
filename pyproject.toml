@@ -9,7 +9,7 @@ dependencies = [
     "beautifulsoup4>=4.12",
     "httpx2>=2.10",
     "markdownify>=1.2",
-    "mcp>=2.3,<3",
+    "mcp[cli]>=2.3,<3",
 ]
 
 [project.scripts]
