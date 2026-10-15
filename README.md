@@ -14,6 +14,15 @@ version—including archived, beta, and development documentation.
 - `get_doc_page` — read a documentation page as Markdown, with pagination for
   long pages
 
+## Access and security
+
+This is a read-only documentation server. It:
+
+- fetches only public pages from `www.postgresql.org`
+- never connects to a PostgreSQL database
+- does not need credentials, API keys, or environment variables
+- cannot execute SQL or modify PostgreSQL projects
+
 ## Use it in Cursor
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/) if needed,
@@ -83,6 +92,21 @@ The server follows the official
 guide: Python 3.10+, MCP Python SDK 2.x, typed `@mcp.tool()` functions,
 `httpx2`, and stdio transport. It never writes logs to stdout; logs go to
 stderr so they cannot corrupt MCP JSON-RPC messages.
+
+## Troubleshooting
+
+- **Server does not appear:** Restart Cursor, then check **Cursor Settings →
+  Tools & MCP** for an error beside `postgres-docs`.
+- **`uvx` is not found:** Install uv, or replace `"uvx"` in the configuration
+  with the absolute path printed by `which uvx` on macOS/Linux or `where uvx`
+  on Windows.
+- **First launch fails:** Confirm that GitHub and PyPI are reachable. The first
+  launch downloads the repository and Python dependencies.
+- **A version or page is unavailable:** Call `list_versions` first. PostgreSQL
+  publishes unsupported releases in its manual archive, while unreleased
+  documentation uses `devel`.
+- **Server code looks stale:** Add `"--refresh"` before `"--from"` in the
+  `uvx` arguments, then restart Cursor.
 
 ## Development
 
